@@ -1,10 +1,13 @@
 import { HardhatUserConfig, configVariable } from "hardhat/config";
+import * as dotenv from "dotenv";
 
 import HardhatNodeTestRunner from "@nomicfoundation/hardhat-node-test-runner";
 import HardhatViem from "@nomicfoundation/hardhat-viem";
 import HardhatNetworkHelpers from "@nomicfoundation/hardhat-network-helpers";
 import HardhatKeystore from "@nomicfoundation/hardhat-keystore";
 import HardhatIgnitionViem from "@nomicfoundation/hardhat-ignition-viem";
+
+dotenv.config();
 
 const config: HardhatUserConfig = {
   /*
@@ -100,8 +103,8 @@ const config: HardhatUserConfig = {
     sepolia: {
       type: "http",
       chainType: "l1",
-      url: configVariable("SEPOLIA_RPC_URL"),
-      accounts: [configVariable("SEPOLIA_PRIVATE_KEY")],
+      url: process.env.SEPOLIA_RPC_URL || "https://rpc.sepolia.org",
+      accounts: process.env.SEPOLIA_PRIVATE_KEY ? [process.env.SEPOLIA_PRIVATE_KEY] : [],
     },
   },
 };
